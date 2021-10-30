@@ -1,6 +1,6 @@
 using System;
 
-interface IDataHandler<TInput, TOutput>
+interface IDataHandler<in TInput, out TOutput>
 {
     TOutput Handle (TInput data);
 }

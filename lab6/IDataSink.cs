@@ -1,6 +1,6 @@
 using System;
 
-interface IDataSink<T>
+interface IDataSink<in T>
 {
     void Put (T data);
     void Put (params T[] data);
