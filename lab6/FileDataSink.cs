@@ -7,12 +7,12 @@ class FileDataSink: IDataSink<object>
 
     public void Put (object data)
     {
-        writer.Write("{0}\r\n", data);
+        writer.Write ("{0}\r\n", data);
     }
 
     public void Put (params object[] data)
     {
-        foreach (object item in data) writer.Write("{0} ", item);
+        foreach (object item in data) writer.Write ("{0} ", item);
         writer.Write("\r\n");
     }
 
@@ -23,6 +23,6 @@ class FileDataSink: IDataSink<object>
 
     public FileDataSink (string filePath)
     {
-        this.writer = File.CreateText(filePath);
+        this.writer = File.CreateText (filePath);
     }
 }
