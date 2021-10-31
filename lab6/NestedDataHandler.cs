@@ -2,8 +2,8 @@ using System;
 
 class NestedDataHandler<TInput, TIntermediate, TOutput>: IDataHandler<TInput, TOutput>
 {
-    public IDataHandler<TInput, TIntermediate> NestedHandler;
-    public Func<TIntermediate, TOutput> TransformFunction;
+    private IDataHandler<TInput, TIntermediate> NestedHandler;
+    private Func<TIntermediate, TOutput> TransformFunction;
     
     public NestedDataHandler (
         IDataHandler<TInput, TIntermediate> nestedHandler,

@@ -9,7 +9,7 @@ class Program
     static void Main(string[] args)
     {
         // Set up conveyor for variant N
-        var conveyor = new DataConveyor<IEnumerable<IEnumerable<int>>, object> {
+        var conveyor = new CachedDataConveyor<IEnumerable<IEnumerable<int>>, object> {
             Source = new IntArrayFromFileDataSource("input.txt"),
             Handlers = new IDataHandler<IEnumerable<IEnumerable<int>>, object>[] {
                 new NestedDataHandler<IEnumerable<IEnumerable<int>>, Tuple<int, int>, object> (
@@ -64,5 +64,7 @@ class Program
         // Run for variant N+1
         conveyor.Run();
 
+        Console.Write("\nDone. Press [ENTER] to exit. \n");
+        Console.ReadLine();
     }
 }
