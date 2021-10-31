@@ -8,7 +8,8 @@ class Program
     /// </summary>
     static void Main(string[] args)
     {
-        var conveyor1 = new DataConveyor<IEnumerable<IEnumerable<int>>, object> {
+        // Set up conveyor for variant N
+        var conveyor = new DataConveyor<IEnumerable<IEnumerable<int>>, object> {
             Source = new IntArrayFromFileDataSource("input.txt"),
             Handlers = new IDataHandler<IEnumerable<IEnumerable<int>>, object>[] {
                 new NestedDataHandler<IEnumerable<IEnumerable<int>>, Tuple<int, int>, object> (
@@ -20,9 +21,48 @@ class Program
                     (product)=> product
                 )
             }, 
-            Sink = new FileDataSink("output1.log")
+            Sink = new FileDataSink("output20.log")
         };
         
-        conveyor1.Run();
+        // First run for variant N
+        conveyor.Run();
+
+        // Set up conveyor for variant N-1: Calculate sum of positive items of array.
+        conveyor.Handlers[1] = new FunctionalDataHandler<IEnumerable<IEnumerable<int>>, object> (
+            (data)=> {
+                long sum = 0;
+                foreach (var line in data) {
+                    foreach (var number in line) {
+                        if (number > 0) sum += number;
+                    }
+                }
+                return sum;
+            }
+        );
+        conveyor.Sink = new FileDataSink("output19.log");
+
+        // Run for variant N-1
+        conveyor.Run();
+
+        // Set up conveyor for variant N+1: Calculate mean of negative items of array.
+        conveyor.Handlers[1] = new FunctionalDataHandler<IEnumerable<IEnumerable<int>>, object> (
+            (data)=> {
+                long sum = 0, count = 0;
+                foreach (var line in data) {
+                    foreach (var number in line) {
+                        if (number < 0) {
+                            sum += number;
+                            ++count;
+                        }
+                    }
+                }
+                return sum / count;
+            }
+        );
+        conveyor.Sink = new FileDataSink("output21.log");
+
+        // Run for variant N+1
+        conveyor.Run();
+
     }
 }
