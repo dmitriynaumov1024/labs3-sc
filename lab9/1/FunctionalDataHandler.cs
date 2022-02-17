@@ -13,9 +13,4 @@ class FunctionalDataHandler<TInput, TOutput>: IDataHandler<TInput, TOutput>
     {
         return this.handler(data);
     }
-
-    public IDataHandler<TInput, TOutput> Clone ()
-    {
-        return new FunctionalDataHandler<TInput, TOutput>(this.handler);
-    }
 }
